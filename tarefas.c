@@ -1,5 +1,6 @@
 #include "tarefas.h"
 #include <stdio.h>
+#include <string.h>
 
 int Criar_tarefa(Tarefa tarefas[], int *posicao){
     if(*posicao >= TOTAL){
@@ -22,7 +23,29 @@ int Criar_tarefa(Tarefa tarefas[], int *posicao){
 };
 
 int Deletar_tarefa(Tarefa tarefas[], int *posicao){
-    printf("Funcao de deletar tarefa\n");
+    if(*posicao == 0){
+        return 1;
+    }
+
+    int pos_d;
+    printf("Entre com a posicao da tarefa: ");
+    scanf("%d", &pos_d);
+
+    pos_d--;
+
+    if(pos_d >= *posicao){
+        return 2;
+    }
+    int i = pos_d;
+
+    for(i; i<*posicao; i++){
+        tarefas[i].prioridade = tarefas[i+1].prioridade;
+        strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
+        strcpy(tarefas[i].descricao, tarefas[i+1].descricao);
+    }
+
+    *posicao = *posicao - 1;
+
     return 0;
 };
 
