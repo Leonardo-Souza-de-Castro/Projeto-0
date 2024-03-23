@@ -13,3 +13,5 @@ int Listar_tarefa(Tarefa tarefas[], int posicao);
 int Salvar(Tarefa tarefas[], int total, int posicao);
 int Carregar_tarefa(Tarefa tarefas[], int total, int posicao);
 
+void Clear_buffer();
+
