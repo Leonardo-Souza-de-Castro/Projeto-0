@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int Criar_tarefa(Tarefa tarefas[], int *posicao){
+Erro Criar_tarefa(Tarefa tarefas[], int *posicao){
     if(*posicao >= TOTAL){
-        return 1;
+        return MAX_TAREFAS;
     }
 
     printf("Entre com a prioridade: ");
@@ -19,12 +19,12 @@ int Criar_tarefa(Tarefa tarefas[], int *posicao){
 
     *posicao = *posicao + 1;
 
-    return 0;
+    return Ok;
 };
 
-int Deletar_tarefa(Tarefa tarefas[], int *posicao){
+Erro Deletar_tarefa(Tarefa tarefas[], int *posicao){
     if(*posicao == 0){
-        return 1;
+        return SEM_TAREFAS;
     }
 
     int pos_d;
@@ -34,7 +34,7 @@ int Deletar_tarefa(Tarefa tarefas[], int *posicao){
     pos_d--;
 
     if(pos_d >= *posicao){
-        return 2;
+        return NAO_EXISTE;
     }
     int i = pos_d;
 
@@ -46,12 +46,12 @@ int Deletar_tarefa(Tarefa tarefas[], int *posicao){
 
     *posicao = *posicao - 1;
 
-    return 0;
+    return Ok;
 };
 
-int Listar_tarefa(Tarefa tarefas[], int posicao){
+Erro Listar_tarefa(Tarefa tarefas[], int posicao){
     if (posicao == 0){
-        return 1;
+        return SEM_TAREFAS;
     }
 
     int i = 0;
@@ -63,59 +63,59 @@ int Listar_tarefa(Tarefa tarefas[], int posicao){
         printf("\t Descricao: %s", tarefas[i].descricao);
     }
 
-    return 0;
+    return Ok;
 };
 
-int Salvar(Tarefa tarefas[], int total, int posicao){
+Erro Salvar(Tarefa tarefas[], int total, int posicao){
     FILE *f = fopen("tarefas", "wb");
 
     if(f == NULL){
-        return 1;
+        return ABRIR;
     }
 
     int e = fwrite(tarefas, total, sizeof(Tarefa), f);
 
     if(e <= 0){
-        return 2;
+        return ESCREVER;
     }
 
     e = fwrite(&posicao, 1, sizeof(int), f);
 
     if(e <= 0){
-        return 2;
+        return ESCREVER;
     }
 
     e = fclose(f);
     if(e != 0){
-        return 3;
+        return FECHAR;
     }
 
-    return 0;
+    return Ok;
 };
 
-int Carregar_tarefa(Tarefa tarefas[], int total, int *posicao){
+Erro Carregar_tarefa(Tarefa tarefas[], int total, int *posicao){
     FILE *f = fopen("tarefas", "rb");
 
     if(f == NULL){
-        return 1;
+        return ABRIR;
     }
 
     int e = fread(tarefas, total, sizeof(Tarefa), f);
     if(e <= 0){
-        return 2;
+        return LER;
     }
 
     e = fread(posicao, 1, sizeof(int), f);
     if(e <= 0){
-        return 2;
+        return LER;
     }
 
     e = fclose(f);
     if(e != 0){
-        return 3;
+        return FECHAR;
     }
 
-    return 0;
+    return Ok;
 };
 
 void Clear_buffer(){
