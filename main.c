@@ -5,8 +5,16 @@ void main(){
     int pos = 0;
     Tarefa tarefa[TOTAL];
 
+    int e = Carregar_tarefa(tarefa, TOTAL, &pos);
+
+
+
 
     int resp;
+    if (e != 0){
+        pos = 0;
+    }
+
     do
     {
         printf("\nMenu Principal: \n");
@@ -30,6 +38,10 @@ void main(){
             break;
         case 3:
             Listar_tarefa(tarefa, pos);
+            break;
+        case 0:
+            printf("Sair\n");
+            Salvar(tarefa, TOTAL, pos);
             break;
 
         default:

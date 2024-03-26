@@ -67,12 +67,54 @@ int Listar_tarefa(Tarefa tarefas[], int posicao){
 };
 
 int Salvar(Tarefa tarefas[], int total, int posicao){
-    printf("Funcao de salvar tarefa\n");
+    FILE *f = fopen("tarefas", "wb");
+
+    if(f == NULL){
+        return 1;
+    }
+
+    int e = fwrite(tarefas, total, sizeof(Tarefa), f);
+
+    if(e <= 0){
+        return 2;
+    }
+
+    e = fwrite(&posicao, 1, sizeof(int), f);
+
+    if(e <= 0){
+        return 2;
+    }
+
+    e = fclose(f);
+    if(e != 0){
+        return 3;
+    }
+
     return 0;
 };
 
-int Carregar_tarefa(Tarefa tarefas[], int total, int posicao){
-    printf("Funcao de carregar tarefa\n");
+int Carregar_tarefa(Tarefa tarefas[], int total, int *posicao){
+    FILE *f = fopen("tarefas", "rb");
+
+    if(f == NULL){
+        return 1;
+    }
+
+    int e = fread(tarefas, total, sizeof(Tarefa), f);
+    if(e <= 0){
+        return 2;
+    }
+
+    e = fread(posicao, 1, sizeof(int), f);
+    if(e <= 0){
+        return 2;
+    }
+
+    e = fclose(f);
+    if(e != 0){
+        return 3;
+    }
+
     return 0;
 };
 
