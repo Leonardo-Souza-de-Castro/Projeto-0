@@ -6,12 +6,14 @@ typedef struct {
     char categoria[100];
 } Tarefa;
 
-int Criar_tarefa(Tarefa tarefas[], int *posicao);
+typedef enum Erros{Ok, MAX_TAREFAS, SEM_TAREFAS, NAO_EXISTE, ABRIR, FECHAR, ESCREVER, LER} Erro;
 
-int Deletar_tarefa(Tarefa tarefas[], int *posicao);
-int Listar_tarefa(Tarefa tarefas[], int posicao);
-int Salvar(Tarefa tarefas[], int total, int posicao);
-int Carregar_tarefa(Tarefa tarefas[], int total, int *posicao);
+Erro Criar_tarefa(Tarefa tarefas[], int *posicao);
+
+Erro Deletar_tarefa(Tarefa tarefas[], int *posicao);
+Erro Listar_tarefa(Tarefa tarefas[], int posicao);
+Erro Salvar(Tarefa tarefas[], int total, int posicao);
+Erro Carregar_tarefa(Tarefa tarefas[], int total, int *posicao);
 
 void Clear_buffer();
 
